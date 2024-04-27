@@ -5,10 +5,10 @@ from keras.models import load_model
 import cv2
 from PIL import Image
 
-model = load_model('model.h5')
+model = load_model('model_v1.h5')
 digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-cap = cv2.VideoCapture(r"C:\Users\pc\Pictures\Screenshots\Screenshot 2024-04-24 164602.png")
+cap = cv2.VideoCapture(0)
 
 while (True):
     _, rgb = cap.read()

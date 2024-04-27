@@ -9,7 +9,7 @@ from keras.datasets import mnist
 import matplotlib.pyplot as plt     
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
-model = load_model('model.h5')
+model = load_model('model_v1.h5')
 
 digits = ['0','1','2','3','4','5','6','7','8','9']
 x_test = np.expand_dims(x_test, axis=3)

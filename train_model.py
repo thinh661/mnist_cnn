@@ -1,12 +1,10 @@
-# http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf
-# https://www.kaggle.com/curiousprogrammer/lenet-5-cnn-with-keras-99-48
 import os
 import numpy as np
 import keras
 from keras.datasets import mnist
 from keras.utils import to_categorical
 from keras.models import Sequential, load_model
-from keras.layers import Dense, Activation, Conv2D, MaxPooling2D, Flatten,Convolution2D
+from keras.layers import Dense, Activation, Conv2D, MaxPooling2D, Flatten, Convolution2D
 from keras.optimizers import Adam
 from keras.callbacks import ReduceLROnPlateau
 from keras.preprocessing.image import ImageDataGenerator
@@ -21,7 +19,8 @@ y_train = to_categorical(y_train, num_classes=10)
 y_test = to_categorical(y_test, num_classes=10)
 model = Sequential()
 
-model.add(Conv2D(filters=24, kernel_size=(5, 5), strides=(1, 1), padding='same', activation='relu', input_shape=(28, 28, 1)))
+model.add(
+    Conv2D(filters=24, kernel_size=(5, 5), strides=(1, 1), padding='same', activation='relu', input_shape=(28, 28, 1)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='same'))
 model.add(Conv2D(filters=36, kernel_size=(5, 5), strides=(1, 1), padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='same'))
@@ -62,4 +61,4 @@ model.fit_generator(datagen.flow(X_train, y_train, batch_size=100), steps_per_ep
 
 score = model.evaluate(X_test, y_test, batch_size=32)
 print('score: ', score)
-model.save('model.h5')  # HDF5 file, you have to pip3 install h5py if don't have it
+model.save('model_v2.h5')
