@@ -8,7 +8,7 @@ from PIL import Image
 model = load_model('model_v1.h5')
 digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(r"C:\Users\pc\Desktop\5379236193252.mp4")
 
 while (True):
     _, rgb = cap.read()

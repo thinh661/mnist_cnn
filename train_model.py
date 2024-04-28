@@ -8,6 +8,8 @@ from keras.layers import Dense, Activation, Conv2D, MaxPooling2D, Flatten, Convo
 from keras.optimizers import Adam
 from keras.callbacks import ReduceLROnPlateau
 from keras.preprocessing.image import ImageDataGenerator
+import tensorflow as tf
+from matplotlib import pyplot as plt
 
 print(os.listdir('/'))
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
@@ -48,6 +50,19 @@ log = keras.callbacks.TensorBoard(log_dir='./log',
                                   embeddings_freq=0,
                                   embeddings_layer_names=None)
 
+
+class myCallback(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs={}):
+        if logs.get('acc') is None:
+            print("1")
+        else:
+            if (logs.get('acc') > 0.995):
+                print("\nReached 99.5% accuracy so cancelling training!")
+                self.model.stop_training = True
+
+
+callbacks = myCallback()
+
 datagen = ImageDataGenerator(
     rotation_range=10,
     width_shift_range=0.1,
@@ -56,8 +71,17 @@ datagen = ImageDataGenerator(
     zoom_range=0.2)
 datagen.fit(X_train)
 
-model.fit_generator(datagen.flow(X_train, y_train, batch_size=100), steps_per_epoch=len(X_train) / 100,
-                    epochs=30, validation_data=(X_test, y_test), callbacks=[reduce_lr, log])
+history = model.fit_generator(datagen.flow(X_train, y_train, batch_size=100), steps_per_epoch=len(X_train) / 100,
+                              epochs=5, validation_data=(X_test, y_test), callbacks=[callbacks])
+
+fig, ax = plt.subplots(2, 1)
+ax[0].plot(history.history['loss'], color='b', label="Training Loss")
+ax[0].plot(history.history['val_loss'], color='r', label="Validation Loss")
+legend = ax[0].legend(loc='best', shadow=True)
+
+ax[1].plot(history.history['acc'], color='b', label="Training Accuracy")
+ax[1].plot(history.history['val_acc'], color='r', label="Validation Accuracy")
+legend = ax[1].legend(loc='best', shadow=True)
 
 score = model.evaluate(X_test, y_test, batch_size=32)
 print('score: ', score)
