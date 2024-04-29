@@ -8,7 +8,7 @@ from PIL import Image
 model = load_model('model_v2.h5')
 digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-folder_path = r"C:\Users\pc\Desktop\data_real"
+folder_path = r"D:\WorkSpace_Thinh1\CNN_ML_Project\data_real"
 
 for filename in os.listdir(folder_path):
     if filename.endswith(".jpg") or filename.endswith(".png"):
