@@ -5,7 +5,7 @@ from keras.models import load_model
 import cv2
 from PIL import Image
 
-model = load_model('model_v1.h5')
+model = load_model('model_v2.h5')
 digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 cap = cv2.VideoCapture(r"C:\Users\pc\Desktop\5379236193252.mp4")
@@ -14,7 +14,7 @@ while (True):
     _, rgb = cap.read()
     frame = cv2.cvtColor(rgb, cv2.COLOR_BGR2GRAY) / 255.0
     # my webcam size 480x640
-    im = Image.fromarray(frame[0:480, 80:560])
+    im = Image.fromarray(frame[:, :])
     im = im.resize((28, 28))
     img_array = np.array(im)
     # tensor shape : 1x28x28x1
